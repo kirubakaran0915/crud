@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View and Update</title>
+</head>
+<body>
+    <h1>View and Update User Details</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    {% if not user %}
+    <!-- Step 1: Fetch data by ID -->
+    <form action="/view-update" method="POST">
+        <label for="id">Enter User ID:</label><br>
+        <input type="text" id="id" name="id" required><br><br>
+        <button type="submit">Fetch Details</button>
+    </form>
+    {% else %}
+    <!-- Step 2: Display and update the data -->
+    <form action="/view-update/submit" method="POST">
+        <input type="hidden" name="id" value="{{ user.id }}">
+
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" value="{{ user.name }}" required><br><br>
+
+        <label for="phone">Phone Number:</label><br>
+        <input type="text" id="phone" name="phone" value="{{ user.phone }}" required><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" value="{{ user.email }}" required><br><br>
+
+        <button type="submit">Update</button>
+    </form>
+    {% endif %}
+</body>
+</html>

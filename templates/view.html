@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View User Details</title>
+</head>
+<body>
+    <h1>View User Details</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <form action="/view" method="POST">
+        <label for="user_id">Enter User ID:</label><br>
+        <input type="text" id="user_id" name="user_id" required><br><br>
+        <button type="submit">View Details</button>
+    </form>
+
+    {% if user_data %}
+        <h2>User Details:</h2>
+        <p><strong>ID:</strong> {{ user_data['id'] }}</p>
+        <p><strong>Name:</strong> {{ user_data['name'] }}</p>
+        <p><strong>Phone:</strong> {{ user_data['phone'] }}</p>
+        <p><strong>Email:</strong> {{ user_data['email'] }}</p>
+    {% endif %}
+</body>
+</html>
